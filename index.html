@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GUO Yixuan | Data Science Tutor & Undergraduate Teaching Assistant</title>
+  <meta name="description" content="HKU Data Science tutor and teaching assistant. Maths and physics for DSE/IB students; STEM and economics for undergraduates.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { navy: { 900: '#0b1a36', 800: '#12264a', 700: '#1e3a6b', 100: '#e4e9f2' }, mist: '#f1f3f7', gold: '#d4af5a' },
+      fontFamily: { serif: ['"Source Serif 4"', '"Songti SC"', 'Georgia', 'serif'], sans: ['"Source Sans 3"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] }
+    } } }
+  </script>
+  <style>
+    html { scroll-padding-top: 5rem; }
+    body { font-family: "Source Sans 3", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .slant { clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%); }
+    .slant-up { clip-path: polygon(0 6%, 100% 0, 100% 100%, 0 100%); }
+    .dot { transition: background .4s, border-color .4s, transform .4s; }
+    .dot.on { background: #d4af5a; border-color: #d4af5a; transform: scale(1.25); }
+    .pt { transition: transform 1.6s cubic-bezier(.2,.8,.2,1); }
+    #trend { stroke-dasharray: 400; stroke-dashoffset: 400; transition: stroke-dashoffset 1.4s ease .9s; }
+    #trend.draw { stroke-dashoffset: 0; }
+    .choice { transition: background .25s, border-color .25s, transform .25s; }
+    .choice:hover { background: #17305c; border-color: #d4af5a; transform: translateY(-3px); }
+    .subj { transition: border-color .25s, transform .25s; }
+    .subj:hover { border-color: #d4af5a; transform: translateY(-3px); }
+    .step { animation: in .5s ease both; }
+    @keyframes in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    a:focus-visible, button:focus-visible { outline: 3px solid #d4af5a; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .pt, #trend, .choice, .subj, .dot, .step { transition: none; animation: none; } }
+  </style>
+</head>
+<body class="bg-white text-slate-700 antialiased">
+  <div id="progress" class="fixed left-0 top-0 z-[60] h-1 w-0 bg-gold"></div>
+
+  <header class="fixed inset-x-0 top-0 z-50 bg-navy-900/95 text-white backdrop-blur">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
+      <a href="#top" class="font-serif text-lg font-bold tracking-wide">GUO Yixuan</a>
+      <ul id="navLinks" class="hidden gap-7 text-sm font-medium lg:flex"></ul>
+      <div class="flex items-center gap-2 text-sm">
+        <button id="langBtn" class="hidden rounded border border-white/40 px-3 py-1.5 hover:border-gold hover:text-gold"></button>
+        <button id="switchBtn" class="hidden rounded border border-white/40 px-3 py-1.5 hover:border-gold hover:text-gold"></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Gate: choose language, then audience -->
+  <section id="gate" class="slant relative flex min-h-screen items-center bg-navy-900 pb-24 pt-28 text-white">
+    <div class="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 lg:grid-cols-5">
+      <div class="lg:col-span-3">
+        <h1 id="gHead" class="font-serif text-5xl font-extrabold leading-[1.05] sm:text-6xl lg:text-7xl">Empowering Students through <span class="text-gold">Data Science</span></h1>
+        <div id="gStep" class="mt-10"></div>
+      </div>
+      <div class="hidden lg:col-span-2 lg:block" aria-hidden="true">
+        <svg viewBox="0 0 400 320" class="w-full">
+          <path d="M40 20V280H380" fill="none" stroke="#3b5584" stroke-width="2"/>
+          <g id="pts"></g>
+          <path id="trend" d="M50 262 L370 40" fill="none" stroke="#d4af5a" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <main id="site" class="hidden"></main>
+
+  <footer id="contact" class="hidden bg-navy-900 py-20 text-white">
+    <div class="mx-auto max-w-4xl px-5 text-center">
+      <h2 id="fHead" class="font-serif text-4xl font-extrabold md:text-5xl"></h2>
+      <div class="mx-auto mt-4 h-1 w-16 bg-gold"></div>
+      <p id="fText" class="mx-auto mt-6 max-w-xl text-slate-300"></p>
+      <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="mailto:u3629195@connect.hku.hk" class="rounded bg-gold px-6 py-3 font-semibold text-navy-900 transition hover:bg-white">u3629195@connect.hku.hk</a>
+        <a href="https://www.linkedin.com/in/yixuanguobetty" target="_blank" rel="noopener" class="rounded border border-white/60 px-6 py-3 font-semibold transition hover:border-gold hover:text-gold">LinkedIn</a>
+      </div>
+      <p class="mt-14 text-sm text-slate-400">&copy; <span id="year"></span> GUO Yixuan</p>
+    </div>
+  </footer>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lang = 'en', aud = null;
+const t = a => a[lang === 'zh' ? 1 : 0];
+const $ = id => document.getElementById(id);
+$('year').textContent = new Date().getFullYear();
+
+/* ---- Optional: add your own public exam results (shown only if filled in) ---- */
+const EXAM = { en: '', zh: '' };            // e.g. { en: 'DSE: 5**, 5**, 5*', zh: 'DSE：5**, 5**, 5*' }
+
+/* ---- Content ---- */
+const NAV = [['#about', ['About', '关于我']], ['#experience', ['Teaching Experience', '教学经历']], ['#subjects', ['Subjects', '可授科目']], ['#contact', ['Contact', '联系']]];
+const BTN = { switch: ['Change view', '重新选择'], lang: ['中文', 'English'] };
+const SEC_TITLES = { about: ['About Me', '关于我'], exp: ['Teaching Experience', '教学经历'], subj: ['Subjects', '可授科目'], method: ['Teaching Method', '教学方法'] };
+
+const HERO = {
+  sec: [['Maths and science tutoring for DSE and IB students', '面向 DSE 与 IB 学生的数学与理科补习'], ['A tutor from HKU Data Science with three years of experience, a clear plan for every student, and daily follow-up that keeps progress on track.', '香港大学数据科学专业，三年补习经验，为每位学生定制方案，并用每日跟进确保进步落到实处。']],
+  uni: [['STEM and economics tutoring for university students', '面向本科生的理工科与经济学补习'], ['Strong grades in the courses I teach, from programming and statistics to econometrics. I explain how to think about a problem, not only how to solve it.', '我所教的课程成绩优异，涵盖编程、统计到计量经济学。我讲的不只是怎么做题，更是怎么思考问题。']]
+};
+const ABOUT = {
+  sec: [['I am a Data Science and Engineering student at HKU, selected for a publicly funded exchange at Nanyang Technological University, Singapore. I teach in Mandarin or fully in English, and my Cantonese is fluent.', '我就读于香港大学数据科学与工程专业，获公派赴新加坡南洋理工大学交换。我可用普通话或全英文授课，粤语流利。'], ['Most students do not lack ability. They lack a clear first step. I find it, then make the rest manageable.', '大多数学生不是能力不足，而是缺少清晰的第一步。我会帮他找到这一步，让后面的路变得可行。']],
+  uni: [['I am a Data Science and Engineering student at HKU, a member of the Dean\u2019s Honour List and in the top 5% of my cohort. I also work as an Undergraduate Teaching Assistant for Introduction to Data Science.', '我就读于香港大学数据科学与工程专业，是院长荣誉榜成员，成绩位列年级前 5%，并担任《数据科学导论》的本科助教。'], ['I teach the courses I did well in, so I know where students usually get stuck and what the exam expects.', '我教的都是自己学得好的课程，所以清楚学生通常卡在哪里，也清楚考试的要求。']]
+};
+const STATS = {
+  sec: [['3 yrs', '三年', ['of DSE, IB and IELTS tutoring', 'DSE、IB、雅思补习经验']], ['IELTS 7.5', '雅思 7.5', ['Listening 9, Reading 8.5', '听力 9 分，阅读 8.5 分']], ['HKU \u00b7 NTU', '港大 \u00b7 南洋理工', ['Home university and exchange', '就读院校与交换院校']]],
+  uni: [['Top 5%', '前 5%', ['of my cohort at HKU', '香港大学年级排名']], ['Dean\u2019s List', '院长荣誉榜', ['Dean\u2019s Honour List', 'Dean\u2019s Honour List']], ['UTA', '本科助教', ['Introduction to Data Science', '数据科学导论']]]
+};
+const EXP = [
+  [['Undergraduate Teaching Assistant', '本科助教'], ['Introduction to Data Science, The University of Hong Kong', '数据科学导论，香港大学'], ['Support students who are learning programming and data analysis for the first time: explaining concepts, helping them debug, and guiding them through coursework.', '帮助初次学习编程与数据分析的同学：讲解概念、协助调试代码、指导课程作业。']],
+  [['Private Tutor', '私人补习老师'], ['About 3 years across the DSE, IB and IELTS pathways', '约三年，涵盖 DSE、IB 与雅思'], ['Extensive experience with IB Grades 7\u201310 and DSE Secondary 3\u20136 students, plus university students who need help with Python, R and foundational mathematics. Student feedback has been consistently positive.', '有丰富的 IB G7\u201310、DSE 中三至中六学生补习经验，也辅导需要 Python、R 与基础数学帮助的本科生，学生反馈一直很积极。']]
+];
+const SEC_SUBJ = [
+  [['Mathematics', '数学'], ['My main subject. DSE Mathematics and IB Mathematics, from building foundations to exam technique.', '我的主力科目。DSE 数学与 IB 数学，从夯实基础到应试技巧。'], 'main'],
+  [['Physics', '物理'], ['DSE Physics, with a focus on understanding the idea before using the formula.', 'DSE 物理，先理解原理，再使用公式。'], ''],
+  [['Language and IELTS', '语言与雅思'], ['IELTS and university English (IELTS 7.5, Listening 9, Reading 8.5).', '雅思与大学英语（雅思 7.5，听力 9 分，阅读 8.5 分）。'], '']
+];
+const SEC_ALSO = ['I have also tutored Chinese, English and Chemistry.', '我也曾辅导中文、英文与化学。'];
+const WHY = [[['Education', '学历'], ['BEng in Data Science and Engineering, HKU. Exchange at Nanyang Technological University, Singapore.', '香港大学数据科学与工程专业；南洋理工大学交换。']], [['Experience', '经验'], ['Three years of tutoring. Positive feedback from students and parents.', '三年补习经验，学生与家长反馈积极。']], [['Teaching language', '授课语言'], ['Mandarin or fully in English. Fluent Cantonese.', '普通话或全英文授课，粤语流利。']]];
+const GROUPS = [
+  [['Computer Science and Data Science', '计算机与数据科学'], [['Introduction to Data Science and Engineering', '数据科学与工程导论', 'COMP 2501', 'A+'], ['Introduction to Machine Learning', '机器学习导论', 'COMP 3314', 'A'], ['Computer Programming II', '计算机编程 II', 'ENGG 1340', 'A']]],
+  [['Mathematics and Statistics', '数学与统计'], [['University Mathematics II', '大学数学 II', 'MATH 1013', 'A+'], ['Multivariable Calculus and Linear Algebra', '多元微积分与线性代数', 'MATH 2014', 'A+'], ['Linear Algebra I', '线性代数 I', 'MATH 2101', 'A'], ['Statistics: Ideas and Concepts', '统计：思想与概念', 'STAT 1600', 'A+'], ['Probability and Statistics II', '概率与统计 II', 'STAT 2602', 'A+']]],
+  [['Economics', '经济学'], [['Introductory Microeconomics', '微观经济学导论', 'ECON 1210', 'A+'], ['Introductory Macroeconomics', '宏观经济学导论', 'ECON 1220', 'A+'], ['Introductory Econometrics', '计量经济学导论', 'ECON 2280', 'A+']]]
+];
+const UNI_NOTE = ['I also help with Python, R, Pandas and NumPy for coursework and projects.', '我也辅导 Python、R、Pandas 与 NumPy，适用于课程作业与项目。'];
+const METHOD = [[['Tailor', '定制方案'], ['Approachable and patient. I assess each student\u2019s actual situation first, then build a plan around it.', '亲和耐心，先精准了解学生的实际情况，再量身定制教学方案。']], [['Simplify', '拆解知识'], ['I turn complex ideas into plain language, so students with weaker foundations can follow and keep up.', '化繁为简，用通俗易懂的方式帮助基础薄弱的学生听得懂、跟得上。']], [['Follow through', '跟进落实'], ['A \u201cdaily practice\u201d routine fills gaps and builds good study habits.', '用“每日一练”持续跟进、查漏补缺，帮助学生养成好习惯。']], [['Build trust', '建立信任'], ['Interactive lessons and smooth communication after class build a relationship of both teacher and friend.', '课堂互动多、课后沟通顺畅，建立亦师亦友的师生关系。']]];
+
+/* ---- Rendering ---- */
+const sec = (id, bg, title, body, extra = '') => `<section id="${id}" class="${bg} ${extra}"><div class="mx-auto max-w-6xl px-5"><h2 class="font-serif text-4xl font-extrabold md:text-5xl">${title}</h2><div class="mt-4 h-1 w-16 bg-gold"></div>${body}</div></section>`;
+
+function render() {
+  const h = HERO[aud], ab = ABOUT[aud];
+  let stats = STATS[aud].map(s => `<div class="rounded-lg bg-navy-900 p-5 text-white"><div class="font-serif text-3xl font-bold text-gold">${t(s)}</div><div class="mt-1 text-sm text-slate-300">${t(s[2])}</div></div>`);
+  if (aud === 'sec' && t(EXAM)) stats.push(`<div class="rounded-lg bg-navy-900 p-5 text-white"><div class="font-serif text-2xl font-bold text-gold">${t(EXAM)}</div><div class="mt-1 text-sm text-slate-300">${lang === 'zh' ? '本人公开试成绩' : 'My public exam results'}</div></div>`);
+
+  const hero = `<section class="slant bg-navy-900 pb-24 pt-32 text-white"><div class="mx-auto max-w-4xl px-5"><h1 class="font-serif text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">${t(h[0])}</h1><p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">${t(h[1])}</p><a href="#${aud === 'sec' ? 'subjects' : 'subjects'}" class="mt-9 inline-block rounded bg-gold px-7 py-3.5 font-semibold text-navy-900 transition hover:bg-white">${lang === 'zh' ? '查看我的实力' : 'See what I offer'}</a></div></section>`;
+
+  const about = sec('about', 'bg-white text-slate-700 -mt-8 py-20', `<span class="text-navy-900">${t(SEC_TITLES.about)}</span>`.replace(/^/, ''),
+    `<div class="mt-10 grid gap-12 md:grid-cols-5"><div class="md:col-span-3"><p class="font-serif text-2xl font-medium leading-snug text-navy-800">${t(ab[1])}</p><p class="mt-6 leading-relaxed">${t(ab[0])}</p></div><div class="grid gap-4 self-start sm:grid-cols-3 md:col-span-2 md:grid-cols-1">${stats.join('')}</div></div>`).replace('<h2 class="', '<h2 class="text-navy-900 ');
+
+  const exp = sec('experience', 'bg-mist py-20', t(SEC_TITLES.exp),
+    `<ol id="tl" class="relative mt-12 max-w-3xl space-y-10 pl-10"><div class="absolute bottom-2 left-[7px] top-2 w-0.5 bg-navy-100"></div><div id="tlFill" class="absolute left-[7px] top-2 w-0.5 bg-gold" style="height:0"></div>${EXP.map(e => `<li class="relative"><span class="dot absolute -left-10 top-2 h-4 w-4 rounded-full border-2 border-navy-700 bg-mist"></span><div class="rounded-lg border-l-4 border-navy-700 bg-white p-7 shadow-sm"><h3 class="font-serif text-2xl font-bold text-navy-900">${t(e[0])}</h3><p class="mt-1 font-semibold text-navy-700">${t(e[1])}</p><p class="mt-3 leading-relaxed">${t(e[2])}</p></div></li>`).join('')}</ol>`).replace('<h2 class="', '<h2 class="text-navy-900 ');
+
+  let subj;
+  if (aud === 'sec') {
+    subj = `<div class="mt-12 grid gap-6 md:grid-cols-3">${SEC_SUBJ.map(s => `<div class="subj rounded-lg border ${s[2] ? 'border-gold' : 'border-white/15'} bg-navy-800 p-7"><h3 class="font-serif text-2xl font-bold">${t(s[0])}</h3>${s[2] ? `<span class="mt-2 inline-block rounded bg-gold px-2 py-0.5 text-xs font-semibold text-navy-900">${lang === 'zh' ? '主力科目' : 'Main subject'}</span>` : ''}<p class="mt-3 text-sm leading-relaxed text-slate-300">${t(s[1])}</p></div>`).join('')}</div>
+      <p class="mt-6 text-slate-300">${t(SEC_ALSO)}</p>
+      <h3 class="mt-16 font-serif text-3xl font-bold">${lang === 'zh' ? '为什么选择我' : 'Why choose me'}</h3>
+      <div class="mt-6 grid gap-6 md:grid-cols-3">${WHY.map(w => `<div class="border-t-4 border-gold pt-4"><h4 class="font-serif text-xl font-bold text-gold">${t(w[0])}</h4><p class="mt-2 text-sm leading-relaxed text-slate-300">${t(w[1])}</p></div>`).join('')}</div>`;
+  } else {
+    subj = `<p class="mt-6 max-w-2xl text-slate-300">${lang === 'zh' ? '以下是我在 HKU 取得 A 或 A+ 的课程，我可以辅导这些科目。' : 'These are the HKU courses where I earned an A or A+. I can tutor all of them.'}</p>
+      <div class="mt-10 grid gap-6 lg:grid-cols-3">${GROUPS.map(g => `<div class="rounded-lg border border-white/15 bg-navy-800 p-6"><h3 class="font-serif text-xl font-bold text-gold">${t(g[0])}</h3><ul class="mt-4 divide-y divide-white/10">${g[1].map(c => `<li class="flex items-center justify-between gap-3 py-3"><div><div class="font-semibold">${t(c)}</div><div class="font-mono text-xs text-slate-400">${c[2]}</div></div><span class="shrink-0 rounded px-2.5 py-1 font-serif text-lg font-bold ${c[3] === 'A+' ? 'bg-gold text-navy-900' : 'bg-white text-navy-900'}">${c[3]}</span></li>`).join('')}</ul></div>`).join('')}</div>
+      <p class="mt-8 text-slate-300">${t(UNI_NOTE)}</p>`;
+  }
+  const subjects = sec('subjects', 'slant-up bg-navy-900 pb-20 pt-28 text-white', t(SEC_TITLES.subj), subj);
+
+  const method = sec('method', 'bg-white py-20', t(SEC_TITLES.method), `<div class="mt-10 grid gap-x-12 gap-y-10 sm:grid-cols-2">${METHOD.map(m => `<div class="border-t-4 border-gold pt-5"><h4 class="font-serif text-3xl font-bold text-navy-700">${t(m[0])}</h4><p class="mt-2 leading-relaxed">${t(m[1])}</p></div>`).join('')}</div>`).replace('<h2 class="', '<h2 class="text-navy-900 ');
+
+  $('site').innerHTML = hero + about + exp + subjects + method;
+  $('fHead').textContent = lang === 'zh' ? '联系我' : 'Get in Touch';
+  $('fText').textContent = lang === 'zh' ? '想预约试课或有任何问题，欢迎联系我。' : 'Interested in a trial session, or have a question? Send me a message.';
+  $('navLinks').innerHTML = NAV.map(n => `<li><a class="hover:text-gold" href="${n[0]}">${t(n[1])}</a></li>`).join('');
+  $('langBtn').textContent = t(BTN.lang); $('switchBtn').textContent = t(BTN.switch);
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+  onScroll();
+}
+
+/* ---- Gate ---- */
+function gateStep1() {
+  $('gStep').innerHTML = `<div class="step"><p class="text-lg text-slate-300">Choose your preferred teaching language <span class="text-slate-400">/ 选择你喜欢的授课语言</span></p><div class="mt-5 flex flex-wrap gap-4"><button data-l="zh" class="choice rounded-lg border border-white/25 bg-navy-800 px-8 py-4 font-serif text-xl font-bold">中文</button><button data-l="en" class="choice rounded-lg border border-white/25 bg-navy-800 px-8 py-4 font-serif text-xl font-bold">English</button></div></div>`;
+  $('gStep').querySelectorAll('button').forEach(b => b.onclick = () => { lang = b.dataset.l; gateStep2(); });
+}
+function gateStep2() {
+  $('gStep').innerHTML = `<div class="step"><p class="text-lg text-slate-300">${lang === 'zh' ? '你是哪类学生？' : 'Which describes you?'}</p><div class="mt-5 flex flex-wrap gap-4"><button data-a="sec" class="choice rounded-lg border border-white/25 bg-navy-800 px-8 py-4 text-left"><span class="block font-serif text-xl font-bold">${lang === 'zh' ? '中学生' : 'Secondary student'}</span><span class="text-sm text-slate-300">${lang === 'zh' ? 'DSE / IB' : 'DSE / IB'}</span></button><button data-a="uni" class="choice rounded-lg border border-white/25 bg-navy-800 px-8 py-4 text-left"><span class="block font-serif text-xl font-bold">${lang === 'zh' ? '本科生' : 'University student'}</span><span class="text-sm text-slate-300">${lang === 'zh' ? '理工科 / 经济学' : 'STEM / Economics'}</span></button></div></div>`;
+  $('gStep').querySelectorAll('button').forEach(b => b.onclick = () => { aud = b.dataset.a; enter(); });
+}
+function enter() {
+  $('gate').classList.add('hidden'); $('site').classList.remove('hidden'); $('contact').classList.remove('hidden');
+  $('langBtn').classList.remove('hidden'); $('switchBtn').classList.remove('hidden');
+  render(); scrollTo({ top: 0 });
+}
+$('langBtn').onclick = () => { lang = lang === 'zh' ? 'en' : 'zh'; render(); };
+$('switchBtn').onclick = () => {
+  $('site').classList.add('hidden'); $('contact').classList.add('hidden'); $('gate').classList.remove('hidden');
+  $('langBtn').classList.add('hidden'); $('switchBtn').classList.add('hidden'); $('navLinks').innerHTML = '';
+  gateStep1(); scrollTo({ top: 0 });
+};
+gateStep1();
+
+/* Hero scatter converging to a trend line */
+const g = $('pts'), ns = 'http://www.w3.org/2000/svg', pts = [];
+for (let i = 0; i < 26; i++) {
+  const x = 55 + i * 12.4, y = 262 - (x - 50) * (222 / 320) + Math.sin(i * 12.9898) * 14;
+  const c = document.createElementNS(ns, 'circle');
+  c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', 5); c.setAttribute('fill', '#cdd8ee'); c.setAttribute('class', 'pt');
+  if (!reduce) c.style.transform = `translate(${Math.sin(i * 7.3) * 150}px,${Math.cos(i * 5.1) * 120}px)`;
+  g.appendChild(c); pts.push(c);
+}
+const settle = () => { pts.forEach((c, i) => setTimeout(() => c.style.transform = 'translate(0,0)', i * 25)); $('trend').classList.add('draw'); };
+reduce ? settle() : setTimeout(settle, 400);
+
+/* Scroll progress + timeline fill */
+function onScroll() {
+  const d = document.documentElement;
+  $('progress').style.width = (d.scrollTop / Math.max(d.scrollHeight - d.clientHeight, 1) * 100) + '%';
+  const tl = $('tl'), fill = $('tlFill'); if (!tl || !fill) return;
+  const r = tl.getBoundingClientRect(), px = Math.min(Math.max(innerHeight * .6 - r.top, 0), Math.max(r.height - 16, 1));
+  fill.style.height = px + 'px';
+  tl.querySelectorAll('.dot').forEach(dt => dt.classList.toggle('on', dt.offsetTop + 8 <= px + 12));
+}
+addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll);
+</script>
+</body>
+</html>
